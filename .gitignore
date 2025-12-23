@@ -1,0 +1,5 @@
+PX4-Autopilot/
+
+# Python noise
+__pycache__/
+*.pyc

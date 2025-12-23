@@ -1,0 +1,743 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sdf version='1.9'>
+  <model name='px4vision'>
+    <gz:partition>px4</gz:partition>
+    <pose>0 0 .24 0 0 0</pose>
+    <self_collide>false</self_collide>
+    <static>false</static>
+    <link name='base_link'>
+      <pose>0 0 0 0 0 0</pose>
+      <inertial>
+        <pose>0 0 0 0 0 0</pose>
+        <mass>1.5</mass>
+        <inertia>
+          <ixx>0.029125</ixx>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyy>0.029125</iyy>
+          <iyz>0</iyz>
+          <izz>0.055225</izz>
+        </inertia>
+      </inertial>
+      <gravity>1</gravity>
+      <velocity_decay />
+      <collision name='base_link_inertia_collision'>
+        <pose>0 0 0 0 0 0</pose>
+        <geometry>
+          <box>
+            <size>0.47 0.47 0.11</size>
+          </box>
+        </geometry>
+        <surface>
+          <contact>
+            <ode>
+              <min_depth>0.001</min_depth>
+              <max_vel>0</max_vel>
+            </ode>
+          </contact>
+          <friction>
+            <ode/>
+          </friction>
+        </surface>
+      </collision>
+      <visual name='base_link_inertia_visual'>
+        <pose>0 0 0 1.5707 0 0.01</pose>
+        <geometry>
+          <mesh>
+            <scale>0.001 0.001 0.001</scale>
+            <uri>model://px4vision/meshes/body.dae</uri>
+          </mesh>
+        </geometry>
+        <material> <!-- DarkGrey-->
+          <ambient>0.175 0.175 0.175 1.0</ambient>
+          <diffuse>0.175 0.175 0.175 1.0</diffuse>
+          <specular>0.175 0.175 0.175 1.0</specular>
+        </material>
+      </visual>
+      <sensor name="air_pressure_sensor" type="air_pressure">
+        <frame_id>base_link</frame_id>
+        <always_on>1</always_on>
+        <update_rate>50</update_rate>
+        <plugin filename="gz-sim-air-pressure-system" name="gz::sim::systems::AirPressure" />
+        <air_pressure>
+          <topic>baro</topic>
+          <pressure>
+            <noise type="gaussian">
+              <mean>0</mean>
+              <stddev>0.01</stddev>
+            </noise>
+          </pressure>
+        </air_pressure>
+      </sensor>
+      <sensor name="magnetometer_sensor" type="magnetometer">
+        <frame_id>base_link</frame_id>
+        <always_on>1</always_on>
+        <update_rate>100</update_rate>
+        <plugin filename="gz-sim-magnetometer-system" name="gz::sim::systems::Magnetometer" />
+        <magnetometer>
+          <!-- TODO: update to fix units and coordinate system when we move past Harmonic -->
+          <!-- See https://github.com/gazebosim/gz-sim/pull/2460 -->
+          <!-- 3mgauss RMS: NOTE: noise is in tesla but sensor reports data in gauss -->
+          <!-- Noise modeled after IIS2MDC -->
+          <topic>mag</topic>
+          <x>
+            <noise type="gaussian">
+              <stddev>0.0001</stddev>
+            </noise>
+          </x>
+          <y>
+            <noise type="gaussian">
+              <stddev>0.0001</stddev>
+            </noise>
+          </y>
+          <z>
+            <noise type="gaussian">
+              <stddev>0.0001</stddev>
+            </noise>
+          </z>
+        </magnetometer>
+      </sensor>
+      <sensor name="navsat_sensor" type="navsat">
+        <frame_id>base_link</frame_id>
+        <always_on>1</always_on>
+        <update_rate>30</update_rate>
+        <plugin filename="${NAVSAT_PLUGIN}" name="${NAVSAT_NAME}"/> <!-- different versions for gz and ign -->
+        <topic>navsat</topic>
+      </sensor>
+      <sensor name="imu_sensor" type="imu">
+        <frame_id>base_link</frame_id>
+        <always_on>1</always_on>
+        <update_rate>250</update_rate>
+        <plugin filename="gz-sim-imu-system" name="gz::sim::systems::Imu"/>
+        <imu>
+          <topic>imu</topic>
+          <angular_velocity>
+            <x>
+              <noise type="gaussian">
+                <mean>0</mean>
+                <stddev>0.00018665</stddev>
+                <dynamic_bias_stddev>3.8785e-05</dynamic_bias_stddev>
+                <dynamic_bias_correlation_time>1000</dynamic_bias_correlation_time>
+              </noise>
+            </x>
+            <y>
+              <noise type="gaussian">
+                <mean>0</mean>
+                <stddev>0.00018665</stddev>
+                <dynamic_bias_stddev>3.8785e-05</dynamic_bias_stddev>
+                <dynamic_bias_correlation_time>1000</dynamic_bias_correlation_time>
+              </noise>
+            </y>
+            <z>
+              <noise type="gaussian">
+                <mean>0</mean>
+                <stddev>0.00018665</stddev>
+                <dynamic_bias_stddev>3.8785e-05</dynamic_bias_stddev>
+                <dynamic_bias_correlation_time>1000</dynamic_bias_correlation_time>
+              </noise>
+            </z>
+          </angular_velocity>
+          <linear_acceleration>
+            <x>
+              <noise type="gaussian">
+                <mean>0</mean>
+                <stddev>0.00186</stddev>
+                <dynamic_bias_stddev>0.006</dynamic_bias_stddev>
+                <dynamic_bias_correlation_time>300</dynamic_bias_correlation_time>
+              </noise>
+            </x>
+            <y>
+              <noise type="gaussian">
+                <mean>0</mean>
+                <stddev>0.00186</stddev>
+                <dynamic_bias_stddev>0.006</dynamic_bias_stddev>
+                <dynamic_bias_correlation_time>300</dynamic_bias_correlation_time>
+              </noise>
+            </y>
+            <z>
+              <noise type="gaussian">
+                <mean>0</mean>
+                <stddev>0.00186</stddev>
+                <dynamic_bias_stddev>0.006</dynamic_bias_stddev>
+                <dynamic_bias_correlation_time>300</dynamic_bias_correlation_time>
+              </noise>
+            </z>
+          </linear_acceleration>
+        </imu>
+      </sensor>
+      <sensor name="gpu_lidar" type="gpu_lidar">
+        <frame_id>base_link</frame_id>
+        <pose> 0.07 0.032 -0.012 0 -0.4 0</pose>
+        <always_on>1</always_on>
+        <update_rate>30</update_rate>
+        <ray>
+          <topic>lidar</topic>
+          <scan>
+            <horizontal>
+              <samples>640</samples>
+              <resolution>1</resolution>
+              <min_angle>-1.396263</min_angle>
+              <max_angle>1.396263</max_angle>
+            </horizontal>
+            <vertical>
+              <samples>640</samples>
+              <resolution>1</resolution>
+              <min_angle>-0.52</min_angle>
+              <max_angle>0.26</max_angle>
+            </vertical>
+          </scan>
+          <range>
+            <min>0.08</min>
+            <max>40.0</max>
+            <resolution>0.01</resolution>
+          </range>
+        </ray>
+        <!-- Optional visualization -->
+        <visualize>true</visualize>
+        <!-- Topic name -->
+      </sensor>
+      <sensor name="optical_flow" type="camera">
+        <pose> 0.7 0.32 -4.0 0 1.5708 0 </pose> 
+        <always_on>1</always_on>
+        <update_rate>30</update_rate>
+        <camera>
+          <horizontal_fov>1.3962634</horizontal_fov>
+          <topic>/flow</topic>
+          <image>
+            <width>64</width>
+            <height>64</height>
+            <format>L8</format>
+          </image>
+          <clip>
+            <near>0.5</near>
+            <far>20.0</far>
+          </clip>
+        </camera>
+      </sensor>
+      <!-- <sensor name="gps" type="gps">
+        <pose>0 0 0.05 0 0 0</pose>
+        <always_on>1</always_on>
+        <update_rate>10</update_rate>
+        <gps>
+          <position_sensing>
+            <horizontal>
+              <noise type="gaussian">
+                <mean>0</mean>
+                <stddev>1.0</stddev>
+              </noise>
+            </horizontal>
+            <vertical>
+              <noise type="gaussian">
+                <mean>0</mean>
+                <stddev>1.0</stddev>
+              </noise>
+            </vertical>
+          </position_sensing>
+          <velocity_sensing>
+            <horizontal>
+              <noise type="gaussian">
+                <mean>0</mean>
+                <stddev>0.1</stddev>
+              </noise>
+            </horizontal>
+            <vertical>
+              <noise type="gaussian">
+                <mean>0</mean>
+                <stddev>0.1</stddev>
+              </noise>
+            </vertical>
+          </velocity_sensing>
+        </gps>
+      </sensor> -->
+    </link>
+    <!-- Ground-truth pose publisher -->
+    <!--
+    <plugin
+      filename="ignition-gazebo6-pose-publisher-system"
+      name="ignition::gazebo::systems::PosePublisher">
+      <publish_link_pose>true</publish_link_pose>
+      <publish_model_pose>true</publish_model_pose>
+      <topic>/px4vision/ground_truth/pose</topic>
+    </plugin>
+    -->
+
+    <!-- Follow actor / camera tracking -->
+    <!--
+    <plugin
+      filename="ignition-gazebo6-follow-actor-system"
+      name="ignition::gazebo::systems::FollowActor">
+      <target>px4vision</target>
+    </plugin>
+    -->
+    <!-- Semantic / instance segmentation (attach to RGB camera) -->
+    <!--
+    <plugin
+      filename="ignition-gazebo6-label-system"
+      name="ignition::gazebo::systems::Label">
+      <camera>rgb_camera</camera>
+      <topic>/px4vision/rgb/labels</topic>
+    </plugin>
+    -->
+    <!--
+    <plugin
+      filename="ignition-gazebo6-thermal-system"
+      name="ignition::gazebo::systems::Thermal">
+      <camera>rgb_camera</camera>
+      <topic>/px4vision/rgb/thermal</topic>
+    </plugin>
+    -->
+    <!-- RGB Camera Link -->
+    <link name="rgb_camera_link">
+      <pose> 0.09 -0.032 -0.012 0 0 0 </pose>  <!-- adjust as needed -->
+      <!-- Minimal inertial block -->
+      <inertial>
+        <mass>0.01</mass>
+        <inertia>
+          <ixx>1e-6</ixx>
+          <iyy>1e-6</iyy>
+          <izz>1e-6</izz>
+        </inertia>
+      </inertial>
+
+      <!-- Simple collision so physics doesn't explode -->
+      <collision name="rgb_camera_collision">
+        <geometry>
+          <box><size>0.05 0.05 0.05</size></box>
+        </geometry>
+      </collision>
+
+      <visual name="rgb_camera_visual">
+        <geometry>
+          <box><size>0.01 0.01 0.01</size></box>
+        </geometry>
+        <material>
+          <ambient>0 0 1 1</ambient>
+          <diffuse>0 0 1 1</diffuse>
+        </material>
+      </visual>
+      <sensor name="rgb_camera" type="camera">
+        <frame_id>base_link</frame_id>
+        <always_on>1</always_on>
+        <update_rate>30</update_rate>
+        <!-- <plugin filename="gz-sim-camera-system" name="gz::sim::systems::Camera"/> -->
+        <!-- <ros>
+          <namespace>/px4vision</namespace>
+          <remapping>image_raw:=rgb/image</remapping>
+          <remapping>camera_info:=rgb/camera_info</remapping>
+        </ros> -->
+        <!-- <plugin filename="gz-sim-camera-system" name="gz::sim::systems::Camera"/> -->
+        <!-- <plugin filename="libgz-sim-camera-system.so" name="gz::sim::systems::Camera"/> -->
+        <camera>
+          <topic>camera</topic>
+          <horizontal_fov>1.5708</horizontal_fov>
+          <image>
+            <width>640</width>
+            <height>480</height>
+            <format>R8G8B8</format>
+          </image>
+          <clip>
+            <near>0.02</near>
+            <far>100.0</far>
+          </clip>
+        </camera>
+      </sensor>
+    </link>
+    <joint name="rgb_camera_joint" type="fixed">
+      <parent>base_link</parent>
+      <child>rgb_camera_link</child>
+    </joint>
+
+    <!-- Depth Camera Link -->
+    <link name="depth_camera_link">
+      <gz_frame_id>base_link</gz_frame_id>
+      <pose> 0.09 -0.012 -0.012 0 0 0 </pose>   <!-- same offset, adjust later -->
+
+      <!-- Minimal inertial block -->
+      <inertial>
+        <mass>0.01</mass>
+        <inertia>
+          <ixx>1e-6</ixx>
+          <iyy>1e-6</iyy>
+          <izz>1e-6</izz>
+        </inertia>
+      </inertial>
+
+      <!-- Simple collision -->
+      <collision name="depth_camera_collision">
+        <geometry>
+          <box><size>0.05 0.05 0.05</size></box>
+        </geometry>
+      </collision>
+
+      <!-- Visual -->
+      <visual name="depth_camera_visual">
+        <geometry>
+          <box><size>0.01 0.01 0.01</size></box>
+        </geometry>
+        <material>
+          <ambient>0 1 0 1</ambient>
+          <diffuse>0 1 0 1</diffuse>
+        </material>
+      </visual>
+
+      <sensor name="depth_camera" type="depth">
+        <always_on>1</always_on>
+        <update_rate>20</update_rate>
+        <!-- <plugin filename="gz-sim-depth-camera-system" name="gz::sim::systems::DepthCamera"/> -->
+        <depth_camera>
+          <topic>depth_camera</topic>
+          <horizontal_fov>1.0472</horizontal_fov>
+          <image>
+            <width>640</width>
+            <height>480</height>
+            <format>FLOAT32</format>
+          </image>
+          <clip>
+            <near>0.02</near>
+            <far>50.0</far>
+          </clip>
+        </depth_camera>
+      </sensor>
+    </link>
+
+    <!-- Joint connecting depth camera to base_link -->
+    <joint name="depth_camera_joint" type="fixed">
+      <parent>base_link</parent>
+      <child>depth_camera_link</child>
+    </joint>
+
+    <link name='rotor_0'>
+      <pose>0.0935 -0.107 0.03 0 0 0</pose>
+      <inertial>
+        <pose>0 0 0 0 0 0</pose>
+        <mass>0.005</mass>
+        <inertia>
+          <ixx>9.75e-07</ixx>
+          <iyy>0.000273104</iyy>
+          <izz>0.000274004</izz>
+        </inertia>
+      </inertial>
+      <collision name='rotor_0_collision'>
+        <pose>0 0 0 0 0 0</pose>
+        <geometry>
+          <cylinder>
+            <length>0.005</length>
+            <radius>0.128</radius>
+          </cylinder>
+        </geometry>
+        <surface>
+          <contact>
+            <ode>
+              <min_depth>0.001</min_depth>
+              <max_vel>0</max_vel>
+            </ode>
+          </contact>
+          <friction>
+            <ode />
+          </friction>
+        </surface>
+      </collision>
+      <visual name='rotor_0_visual'>
+        <pose>0 0 0 0 0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>0.6 0.6 0.6</scale>
+            <uri>model://px4vision/meshes/iris_prop_ccw.dae</uri>
+          </mesh>
+        </geometry>
+        <material> <!-- Blue -->
+          <ambient>0 0 1</ambient>
+          <diffuse>0 0 1</diffuse>
+          <specular>0.1 0.1 0.1 1</specular>
+        </material>
+      </visual>
+      <gravity>1</gravity>
+      <velocity_decay />
+    </link>
+    <joint name='rotor_0_joint' type='revolute'>
+      <child>rotor_0</child>
+      <parent>base_link</parent>
+      <axis>
+        <xyz>0 0 1</xyz>
+        <limit>
+          <lower>-1e+16</lower>
+          <upper>1e+16</upper>
+        </limit>
+        <dynamics>
+          <spring_reference>0</spring_reference>
+          <spring_stiffness>0</spring_stiffness>
+        </dynamics>
+        <!-- <use_parent_model_frame>1</use_parent_model_frame> -->
+      </axis>
+    </joint>
+    <link name='rotor_1'>
+      <pose>-0.0935 0.107 0.03 0 0 0</pose>
+      <inertial>
+        <pose>0 0 0 0 0 0</pose>
+        <mass>0.005</mass>
+        <inertia>
+          <ixx>9.75e-07</ixx>
+          <iyy>0.000273104</iyy>
+          <izz>0.000274004</izz>
+        </inertia>
+      </inertial>
+      <collision name='rotor_1_collision'>
+        <pose>0 0 0 0 0 0</pose>
+        <geometry>
+          <cylinder>
+            <length>0.005</length>
+            <radius>0.128</radius>
+          </cylinder>
+        </geometry>
+        <surface>
+          <contact>
+            <ode>
+              <min_depth>0.001</min_depth>
+              <max_vel>0</max_vel>
+            </ode>
+          </contact>
+          <friction>
+            <ode />
+          </friction>
+        </surface>
+      </collision>
+      <visual name='rotor_1_visual'>
+        <pose>0 0 0 0 0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>0.6 0.6 0.6</scale>
+            <uri>model://px4vision/meshes/iris_prop_ccw.dae</uri>
+          </mesh>
+        </geometry>
+        <material> <!-- DarkGrey -->
+          <ambient>0.175 0.175 0.175 1.0</ambient>
+          <diffuse>0.175 0.175 0.175 1.0</diffuse>
+          <specular>0.175 0.175 0.175 1.0</specular>
+        </material>
+      </visual>
+      <gravity>1</gravity>
+      <velocity_decay />
+    </link>
+    <joint name='rotor_1_joint' type='revolute'>
+      <child>rotor_1</child>
+      <parent>base_link</parent>
+      <axis>
+        <xyz>0 0 1</xyz>
+        <limit>
+          <lower>-1e+16</lower>
+          <upper>1e+16</upper>
+        </limit>
+        <dynamics>
+          <spring_reference>0</spring_reference>
+          <spring_stiffness>0</spring_stiffness>
+        </dynamics>
+        <!-- <use_parent_model_frame>1</use_parent_model_frame> -->
+      </axis>
+    </joint>
+    <link name='rotor_2'>
+      <pose>0.0935 0.107 0.03 0 0 0</pose>
+      <inertial>
+        <pose>0 0 0 0 0 0</pose>
+        <mass>0.005</mass>
+        <inertia>
+          <ixx>9.75e-07</ixx>
+          <iyy>0.000273104</iyy>
+          <izz>0.000274004</izz>
+        </inertia>
+      </inertial>
+      <collision name='rotor_2_collision'>
+        <pose>0 0 0 0 0 0</pose>
+        <geometry>
+          <cylinder>
+            <length>0.005</length>
+            <radius>0.128</radius>
+          </cylinder>
+        </geometry>
+        <surface>
+          <contact>
+            <ode>
+              <min_depth>0.001</min_depth>
+              <max_vel>0</max_vel>
+            </ode>
+          </contact>
+          <friction>
+            <ode />
+          </friction>
+        </surface>
+      </collision>
+      <visual name='rotor_2_visual'>
+        <pose>0 0 0 0 0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>0.6 0.6 0.6</scale>
+            <uri>model://px4vision/meshes/iris_prop_cw.dae</uri>
+          </mesh>
+        </geometry>
+        <material> <!-- Blue -->
+          <ambient>0 0 1</ambient>
+          <diffuse>0 0 1</diffuse>
+          <specular>0.1 0.1 0.1 1</specular>
+        </material>
+      </visual>
+      <gravity>1</gravity>
+      <velocity_decay />
+    </link>
+    <joint name='rotor_2_joint' type='revolute'>
+      <child>rotor_2</child>
+      <parent>base_link</parent>
+      <axis>
+        <xyz>0 0 1</xyz>
+        <limit>
+          <lower>-1e+16</lower>
+          <upper>1e+16</upper>
+        </limit>
+        <dynamics>
+          <spring_reference>0</spring_reference>
+          <spring_stiffness>0</spring_stiffness>
+        </dynamics>
+        <!-- <use_parent_model_frame>1</use_parent_model_frame> -->
+      </axis>
+    </joint>
+    <link name='rotor_3'>
+      <pose>-0.0935 -0.107 0.03 0 0 0</pose>
+      <inertial>
+        <pose>0 0 0 0 0 0</pose>
+        <mass>0.005</mass>
+        <inertia>
+          <ixx>9.75e-07</ixx>
+          <iyy>0.000273104</iyy>
+          <izz>0.000274004</izz>
+        </inertia>
+      </inertial>
+      <collision name='rotor_3_collision'>
+        <pose>0 0 0 0 0 0</pose>
+        <geometry>
+          <cylinder>
+            <length>0.005</length>
+            <radius>0.128</radius>
+          </cylinder>
+        </geometry>
+        <surface>
+          <contact>
+            <ode>
+              <min_depth>0.001</min_depth>
+              <max_vel>0</max_vel>
+            </ode>
+          </contact>
+          <friction>
+            <ode />
+          </friction>
+        </surface>
+      </collision>
+      <visual name='rotor_3_visual'>
+        <pose>0 0 0 0 0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>0.6 0.6 0.6</scale>
+            <uri>model://px4vision/meshes/iris_prop_cw.dae</uri>
+          </mesh>
+        </geometry>
+        <material> <!-- DarkGrey -->
+          <ambient>0.175 0.175 0.175 1.0</ambient>
+          <diffuse>0.175 0.175 0.175 1.0</diffuse>
+          <specular>0.175 0.175 0.175 1.0</specular>
+        </material>
+      </visual>
+      <gravity>1</gravity>
+      <velocity_decay />
+    </link>
+    <joint name='rotor_3_joint' type='revolute'>
+      <child>rotor_3</child>
+      <parent>base_link</parent>
+      <axis>
+        <xyz>0 0 1</xyz>
+        <limit>
+          <lower>-1e+16</lower>
+          <upper>1e+16</upper>
+        </limit>
+        <dynamics>
+          <spring_reference>0</spring_reference>
+          <spring_stiffness>0</spring_stiffness>
+        </dynamics>
+        <!-- <use_parent_model_frame>1</use_parent_model_frame> -->
+      </axis>
+    </joint>
+    <!-- TODO: add GPS plugin -->
+    <plugin filename="gz-sim-multicopter-motor-model-system"
+      name="gz::sim::systems::MulticopterMotorModel">
+      <robotNamespace>px4vision</robotNamespace>
+      <jointName>rotor_0_joint</jointName>
+      <linkName>rotor_0</linkName>
+      <turningDirection>ccw</turningDirection>
+      <timeConstantUp>0.0125</timeConstantUp>
+      <timeConstantDown>0.025</timeConstantDown>
+      <maxRotVelocity>1000</maxRotVelocity>
+      <motorConstant>8.54858e-06</motorConstant>
+      <momentConstant>0.06</momentConstant>
+      <commandSubTopic>command/motor_speed</commandSubTopic>
+      <motorNumber>0</motorNumber>
+      <rotorDragCoefficient>0.000806428</rotorDragCoefficient>
+      <rollingMomentCoefficient>1e-06</rollingMomentCoefficient>
+      <rotorVelocitySlowdownSim>10</rotorVelocitySlowdownSim>
+      <motorType>velocity</motorType>
+    </plugin>
+    <plugin filename="gz-sim-multicopter-motor-model-system"
+      name="gz::sim::systems::MulticopterMotorModel">
+      <robotNamespace>px4vision</robotNamespace>
+      <jointName>rotor_1_joint</jointName>
+      <linkName>rotor_1</linkName>
+      <turningDirection>ccw</turningDirection>
+      <timeConstantUp>0.0125</timeConstantUp>
+      <timeConstantDown>0.025</timeConstantDown>
+      <maxRotVelocity>1000</maxRotVelocity>
+      <motorConstant>8.54858e-06</motorConstant>
+      <momentConstant>0.06</momentConstant>
+      <commandSubTopic>command/motor_speed</commandSubTopic>
+      <motorNumber>1</motorNumber>
+      <rotorDragCoefficient>0.000806428</rotorDragCoefficient>
+      <rollingMomentCoefficient>1e-06</rollingMomentCoefficient>
+      <rotorVelocitySlowdownSim>10</rotorVelocitySlowdownSim>
+      <motorType>velocity</motorType>
+    </plugin>
+    <plugin filename="gz-sim-multicopter-motor-model-system"
+      name="gz::sim::systems::MulticopterMotorModel">
+      <robotNamespace>px4vision</robotNamespace>
+      <jointName>rotor_2_joint</jointName>
+      <linkName>rotor_2</linkName>
+      <turningDirection>cw</turningDirection>
+      <timeConstantUp>0.0125</timeConstantUp>
+      <timeConstantDown>0.025</timeConstantDown>
+      <maxRotVelocity>1000</maxRotVelocity>
+      <motorConstant>8.54858e-06</motorConstant>
+      <momentConstant>0.06</momentConstant>
+      <commandSubTopic>command/motor_speed</commandSubTopic>
+      <motorNumber>2</motorNumber>
+      <rotorDragCoefficient>0.000806428</rotorDragCoefficient>
+      <rollingMomentCoefficient>1e-06</rollingMomentCoefficient>
+      <rotorVelocitySlowdownSim>10</rotorVelocitySlowdownSim>
+      <motorType>velocity</motorType>
+    </plugin>
+    <plugin filename="gz-sim-multicopter-motor-model-system"
+      name="gz::sim::systems::MulticopterMotorModel">
+      <robotNamespace>px4vision</robotNamespace>
+      <jointName>rotor_3_joint</jointName>
+      <linkName>rotor_3</linkName>
+      <turningDirection>cw</turningDirection>
+      <timeConstantUp>0.0125</timeConstantUp>
+      <timeConstantDown>0.025</timeConstantDown>
+      <maxRotVelocity>1000</maxRotVelocity>
+      <motorConstant>8.54858e-06</motorConstant>
+      <momentConstant>0.06</momentConstant>
+      <commandSubTopic>command/motor_speed</commandSubTopic>
+      <motorNumber>3</motorNumber>
+      <rotorDragCoefficient>0.000806428</rotorDragCoefficient>
+      <rollingMomentCoefficient>1e-06</rollingMomentCoefficient>
+      <rotorVelocitySlowdownSim>10</rotorVelocitySlowdownSim>
+      <motorType>velocity</motorType>
+    </plugin>
+    <plugin
+      filename="gz-sim-sensors-system" name="gz::sim::systems::Sensors">
+      <render_engine>ogre2</render_engine>
+    </plugin>
+  </model>
+</sdf>

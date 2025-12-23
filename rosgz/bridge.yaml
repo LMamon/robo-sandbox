@@ -1,0 +1,83 @@
+- ros_topic_name: "/px4vision/air_pressure"
+  gz_topic_name: "/world/rxsim/model/px4vision/link/base_link/sensor/air_pressure_sensor/air_pressure"
+  ros_type_name: "sensor_msgs/msg/FluidPressure"
+  gz_type_name: "ignition.msgs.FluidPressure"
+  direction: GZ_TO_ROS
+
+- ros_topic_name: "/px4vision/magnetometer"
+  gz_topic_name: "/world/rxsim/model/px4vision/link/base_link/sensor/magnetometer_sensor/magnetometer"
+  ros_type_name: "sensor_msgs/msg/MagneticField"
+  gz_type_name: "ignition.msgs.Magnetometer"
+  direction: GZ_TO_ROS
+
+- ros_topic_name: "/px4vision/imu"
+  gz_topic_name: "/world/rxsim/model/px4vision/link/base_link/sensor/imu_sensor/imu"
+  ros_type_name: "sensor_msgs/msg/Imu"
+  gz_type_name: "ignition.msgs.IMU"
+  direction: GZ_TO_ROS
+
+- ros_topic_name: "/px4vision/navsat"
+  gz_topic_name: "/world/rxsim/model/px4vision/link/base_link/sensor/navsat_sensor/navsat"
+  ros_type_name: "sensor_msgs/msg/NavSatFix"
+  gz_type_name: "ignition.msgs.NavSat"
+  direction: GZ_TO_ROS
+
+- ros_topic_name: "/px4vision/lidar/scan"
+  gz_topic_name: "/world/rxsim/model/px4vision/link/base_link/sensor/gpu_lidar/scan"
+  ros_type_name: "sensor_msgs/msg/LaserScan"
+  gz_type_name: "ignition.msgs.LaserScan"
+  direction: GZ_TO_ROS
+
+- ros_topic_name: "/px4vision/lidar/points"
+  gz_topic_name: "/world/rxsim/model/px4vision/link/base_link/sensor/gpu_lidar/scan/points"
+  ros_type_name: "sensor_msgs/msg/PointCloud2"
+  gz_type_name: "ignition.msgs.PointCloudPacked"
+  direction: GZ_TO_ROS
+
+- ros_topic_name: "/px4vision/optical_flow/image"
+  gz_topic_name: "/world/rxsim/model/px4vision/link/base_link/sensor/optical_flow/image"
+  ros_type_name: "sensor_msgs/msg/Image"
+  gz_type_name: "ignition.msgs.Image"
+  direction: GZ_TO_ROS
+
+- ros_topic_name: "/px4vision/optical_flow/camera_info"
+  gz_topic_name: "/world/rxsim/model/px4vision/link/base_link/sensor/optical_flow/camera_info"
+  ros_type_name: "sensor_msgs/msg/CameraInfo"
+  gz_type_name: "ignition.msgs.CameraInfo"
+  direction: GZ_TO_ROS
+
+- ros_topic_name: "/px4vision/rgb/image"
+  gz_topic_name: "/world/rxsim/model/px4vision/link/rgb_camera_link/sensor/rgb_camera/image"
+  ros_type_name: "sensor_msgs/msg/Image" 
+  gz_type_name: "ignition.msgs.Image"
+  direction: GZ_TO_ROS
+
+- ros_topic_name: "/px4vision/rgb/camera_info"
+  gz_topic_name: "/world/rxsim/model/px4vision/link/rgb_camera_link/sensor/rgb_camera/camera_info"
+  ros_type_name: "sensor_msgs/msg/CameraInfo"
+  gz_type_name: "ignition.msgs.CameraInfo"
+  direction: GZ_TO_ROS
+
+- ros_topic_name: "/px4vision/depth/image"
+  gz_topic_name: "/world/rxsim/model/px4vision/link/depth_camera_link/sensor/depth_camera/depth_image" 
+  ros_type_name: "sensor_msgs/msg/Image"
+  gz_type_name: "ignition.msgs.Image"
+  direction: GZ_TO_ROS
+
+- ros_topic_name: "/px4vision/depth/camera_info"
+  gz_topic_name: "/world/rxsim/model/px4vision/link/depth_camera_link/sensor/depth_camera/camera_info"
+  ros_type_name: "sensor_msgs/msg/CameraInfo"
+  gz_type_name: "ignition.msgs.CameraInfo"
+  direction: GZ_TO_ROS
+
+- ros_topic_name: "/px4vision/depth/points"
+  gz_topic_name: "/world/rxsim/model/px4vision/link/depth_camera_link/sensor/depth_camera/depth_image/points"
+  ros_type_name: "sensor_msgs/msg/PointCloud2"
+  gz_type_name: "ignition.msgs.PointCloudPacked"
+  direction: GZ_TO_ROS
+
+- ros_topic_name: "/clock"
+  gz_topic_name: "/clock"
+  ros_type_name: "rosgraph_msgs/msg/Clock"
+  gz_type_name: "ignition.msgs.Clock"
+  direction: GZ_TO_ROS

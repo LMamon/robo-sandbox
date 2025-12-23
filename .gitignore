@@ -1,0 +1,28 @@
+# PX4
+PX4-Autopilot/
+
+# Unreal Engine
+Binaries/
+Build/
+DerivedDataCache/
+Intermediate/
+Saved/
+Content/
+Config/
+Plugins/
+Source/
+*.xcworkspace/
+*.sln
+sim.uproject
+
+# Pixi / tooling
+pixi.lock
+pixi.toml
+Dockerfile
+
+# macOS noise
+.DS_Store
+
+# Python noise
+__pycache__/
+*.pyc

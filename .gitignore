@@ -26,3 +26,10 @@ Dockerfile
 # Python noise
 __pycache__/
 *.pyc
+*.pt
+*.pth
+
+#ROS build artifacts
+rosgz/build/
+rosgz/install/
+rosgz/log/

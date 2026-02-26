@@ -22,4 +22,10 @@ def generate_launch_description():
             output='screen'
         ),
         # TODO: add nodes for computervision to start perception stack and publish to ROS topics
+        Node(
+            package='perception',
+            executable='perception_node',
+            name='percepion_node',
+            output='screen'
+        )
     ])

@@ -9,6 +9,9 @@
                         <uri>meshes/waterlow.dae</uri>
                     </mesh>
                 </geometry>
+                <plugin filename="gz-sim-label-system" name="gz::sim::systems::Label"> <!--might need to change when using ign -->
+                    <label>3</label>
+                </plugin>
                 <plugin filename="${COAST_WATER_SHADER_PLUGIN}" name="${COAST_WATER_SHADER_NAME}"> <!-- different versions for gz and ign -->
                     <shader language="glsl">
                         <vertex>materials/programs/GerstnerWaves_vs_330.glsl</vertex>

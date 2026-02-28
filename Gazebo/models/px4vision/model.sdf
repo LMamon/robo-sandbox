@@ -269,15 +269,6 @@
       <target>px4vision</target>
     </plugin>
     -->
-    <!-- Semantic / instance segmentation (attach to RGB camera) -->
-    <!--
-    <plugin
-      filename="ignition-gazebo6-label-system"
-      name="ignition::gazebo::systems::Label">
-      <camera>rgb_camera</camera>
-      <topic>/px4vision/rgb/labels</topic>
-    </plugin>
-    -->
     <!--
     <plugin
       filename="ignition-gazebo6-thermal-system"
@@ -318,7 +309,7 @@
       <sensor name="rgb_camera" type="camera">
         <frame_id>base_link</frame_id>
         <always_on>1</always_on>
-        <update_rate>30</update_rate>
+        <update_rate>60</update_rate>
         <!-- <plugin filename="gz-sim-camera-system" name="gz::sim::systems::Camera"/> -->
         <!-- <ros>
           <namespace>/px4vision</namespace>
@@ -344,7 +335,7 @@
 
       <sensor name="boundingbox_camera" type="boundingbox_camera">
         <always_on>1</always_on>
-        <update_rate>30</update_rate>
+        <update_rate>10</update_rate>
         <topic>gt_bbox</topic>
         <camera>
           <box_type>2d</box_type>
@@ -358,13 +349,16 @@
             <near>0.02</near>
             <far>100.0</far>
           </clip>
+          <save enabled="true">
+            <path>bbox_data/bbox_camera</path>
+          </save>
         </camera>
       </sensor>
 
-      <sensor name="segmentation_camera" type="segmentation_camera">
+      <sensor name="instance_segmentation_camera" type="segmentation_camera">
         <always_on>1</always_on>
-        <update_rate>30</update_rate>
-        <topic>gt_segmentation</topic>
+        <update_rate>10</update_rate>
+        <topic>gt_panoptic</topic>
         <camera>
           <segmentation_type>instance</segmentation_type>
           <horizontal_fov>1.5708</horizontal_fov>
@@ -377,6 +371,9 @@
             <near>0.02</near>
             <far>100.0</far>
           </clip>
+          <save enabled="true">
+            <path>segmentation_data/panoptic_camera</path>
+          </save>
         </camera>
       </sensor>
     </link>
@@ -421,7 +418,7 @@
 
       <sensor name="depth_camera" type="depth">
         <always_on>1</always_on>
-        <update_rate>30</update_rate>
+        <update_rate>1</update_rate>
         <!-- <plugin filename="gz-sim-depth-camera-system" name="gz::sim::systems::DepthCamera"/> -->
         <depth_camera>
           <topic>depth_camera</topic>
@@ -429,12 +426,15 @@
           <image>
             <width>640</width>
             <height>480</height>
-            <format>FLOAT32</format>
+            <format>R8G8B8</format>
           </image>
           <clip>
             <near>0.02</near>
             <far>100.0</far>
           </clip>
+          <save enabled="true">
+            <path>depth_data/depth_camera</path>
+          </save>
         </depth_camera>
       </sensor>
     </link>

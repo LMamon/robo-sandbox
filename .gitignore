@@ -33,3 +33,9 @@ __pycache__/
 rosgz/build/
 rosgz/install/
 rosgz/log/
+
+# Gazebo generated data
+bbox_data/
+segmentation_data/
+
+.vscode/

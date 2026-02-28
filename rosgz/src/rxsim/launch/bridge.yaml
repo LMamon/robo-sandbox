@@ -81,3 +81,21 @@
   ros_type_name: "rosgraph_msgs/msg/Clock"
   gz_type_name: "ignition.msgs.Clock"
   direction: GZ_TO_ROS
+
+- ros_topic_name: "/perception/gt_bbox_image"
+  gz_topic_name: "/gt_bbox_image"
+  ros_type_name: "sensor_msgs/msg/Image"
+  gz_type_name: "ignition.msgs.Image"
+  direction: GZ_TO_ROS
+
+- ros_topic_name: "/perception/gt_panoptic_colored"
+  gz_topic_name: "/gt_panoptic/colored_map"
+  ros_type_name: "sensor_msgs/msg/Image"
+  gz_type_name: "ignition.msgs.Image"
+  direction: GZ_TO_ROS
+
+- ros_topic_name: "/perception/gt_panoptic_labels"
+  gz_topic_name: "/gt_panoptic/labels_map"
+  ros_type_name: "sensor_msgs/msg/Image"
+  gz_type_name: "ignition.msgs.Image"
+  direction: GZ_TO_ROS

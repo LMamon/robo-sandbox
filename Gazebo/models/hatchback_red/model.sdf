@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sdf version='1.9'>
+  <model name="hatchback_red">
+    <static>true</static>
+    <link name="link">
+      <collision name="collision">
+        <pose>0 0 0 0 0 1.57079632679</pose>
+        <geometry>
+          <box>
+            <scale>0.0254 0.0254 0.0254</scale>
+            <uri>meshes/hatchback.obj</uri>
+          </box>
+        </geometry>
+      </collision>
+      <visual name="visual">
+        <pose>0 0 0 0 0 1.57079632679</pose>
+        <geometry>
+          <mesh>
+            <scale>0.0254 0.0254 0.0254</scale>
+            <uri>meshes/hatchback.obj</uri>
+          </mesh>
+        </geometry>
+        <plugin filename="ignition-gazebo-label-system" name="ignition::gazebo::systems::Label">
+            <label>5</label>
+        </plugin>
+      </visual>
+    </link>
+  </model>
+</sdf>

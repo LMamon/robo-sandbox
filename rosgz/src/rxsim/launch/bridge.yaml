@@ -17,7 +17,7 @@
   direction: GZ_TO_ROS
 
 - ros_topic_name: "/px4vision/navsat"
-  gz_topic_name: "/world/rxsim/model/px4vision/link/base_link/sensor/navsat_sensor/navsat"
+  gz_topic_name: "/navsat"
   ros_type_name: "sensor_msgs/msg/NavSatFix"
   gz_type_name: "ignition.msgs.NavSat"
   direction: GZ_TO_ROS
@@ -82,6 +82,9 @@
   gz_type_name: "ignition.msgs.Clock"
   direction: GZ_TO_ROS
 
+
+# ground truth topics
+
 - ros_topic_name: "/perception/gt_bbox_image"
   gz_topic_name: "/gt_bbox_image"
   ros_type_name: "sensor_msgs/msg/Image"
@@ -99,3 +102,17 @@
   ros_type_name: "sensor_msgs/msg/Image"
   gz_type_name: "ignition.msgs.Image"
   direction: GZ_TO_ROS
+
+  # perception node (cv) topics for ros to gz
+
+- ros_topic_name: "/perception/detections/image"
+  gz_topic_name: "/perception/detections/image"
+  ros_type_name: "sensor_msgs/msg/Image"
+  gz_type_name: "ignition.msgs.Image"
+  direction: ROS_TO_GZ
+
+- ros_topic_name: "/perception/instance_seg/image"
+  gz_topic_name: "/perception/instance_seg/image"
+  ros_type_name: "sensor_msgs/msg/Image"
+  gz_type_name: "ignition.msgs.Image"
+  direction: ROS_TO_GZ

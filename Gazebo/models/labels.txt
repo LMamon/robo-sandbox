@@ -1,0 +1,7 @@
+1 = vegetation / trees
+2 = terrain / ground
+3 = water
+4 = plane
+5 = hatchback
+6 = person
+7 = truck

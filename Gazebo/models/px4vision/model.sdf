@@ -101,7 +101,7 @@
         <frame_id>base_link</frame_id>
         <always_on>1</always_on>
         <update_rate>30</update_rate>
-        <plugin filename="${NAVSAT_PLUGIN}" name="${NAVSAT_NAME}"/> <!-- different versions for gz and ign -->
+        <plugin filename="ignition-gazebo-navsat-system" name="ignition::gazebo::systems::NavSat"/> <!-- different versions for gz and ign -->
         <topic>navsat</topic>
       </sensor>
       <sensor name="imu_sensor" type="imu">

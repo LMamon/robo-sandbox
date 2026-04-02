@@ -1,5 +1,4 @@
 import rclpy
-import cv2
 import torch
 from cv_bridge import CvBridge
 from rclpy.node import Node
@@ -32,8 +31,6 @@ class PerceptionNode(Node):
             '/perception/detections/image',
             10,
         )
-
-        self.rgb_sub
 
     def image_callback(self, msg):
         img = self.bridge.imgmsg_to_cv2(msg, desired_encoding='bgr8')

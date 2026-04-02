@@ -39,3 +39,8 @@ bbox_data/
 segmentation_data/
 
 .vscode/
+
+px4_ros_uxrce_dds_ws/
+
+rosbag2*
+*.zsh

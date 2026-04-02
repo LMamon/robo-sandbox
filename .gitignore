@@ -44,3 +44,7 @@ px4_ros_uxrce_dds_ws/
 
 rosbag2*
 *.zsh
+rosgz/src/open_vins/
+rosgz/src/px4_msgs/
+rosgz/src/ros_gz/
+rosgz/src/vision_opencv/

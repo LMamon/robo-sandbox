@@ -1,0 +1,11 @@
+/px4vision/rgb/image:
+  reliability: best_effort
+  durability: volatile
+  history: keep_last
+  depth: 10
+
+/px4vision/imu:
+  reliability: best_effort
+  durability: volatile
+  history: keep_last
+  depth: 10

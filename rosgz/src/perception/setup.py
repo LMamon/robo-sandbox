@@ -4,7 +4,7 @@ package_name = 'perception'
 
 setup(
     name=package_name,
-    version='0.0.0',
+    version='1.0.0',
     packages=find_packages(exclude=['test']),
     data_files=[
         ('share/ament_index/resource_index/packages',
@@ -15,7 +15,7 @@ setup(
     zip_safe=True,
     maintainer='Louis M',
     maintainer_email='maintainer@example.com',
-    description='perception engine for rxsim',
+    description='non VIO vision tasks for rxsim',
     license='Apache-2.0',
     extras_require={
         'test': [

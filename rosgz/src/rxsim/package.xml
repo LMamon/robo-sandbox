@@ -2,8 +2,8 @@
 <?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
 <package format="3">
   <name>rxsim</name>
-  <version>0.0.0</version>
-  <description>Distributed autonomy integration package to support ROS 2 simulation environments on macOS.</description>
+  <version>0.1.0</version>
+  <description>integration package for VIO with autonomy pipeline.</description>
   <maintainer email="maintainer@example.com">Louis M</maintainer>
   <license>Apache-2.0</license>
 
@@ -12,6 +12,9 @@
   <depend>foxglove_bridge</depend>
   <depend>sensor_msgs</depend>
   <depend>vision_msgs</depend>
+  <depend>launch</depend>
+  <depend>launch_ros</depend>
+  <depend>ament_index_python</depend>
 
   <test_depend>ament_copyright</test_depend>
   <test_depend>ament_flake8</test_depend>

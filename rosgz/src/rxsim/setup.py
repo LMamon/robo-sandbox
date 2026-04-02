@@ -6,7 +6,7 @@ package_name = 'rxsim'
 
 setup(
     name=package_name,
-    version='0.0.0',
+    version='0.1.0',
     packages=find_packages(exclude=['test']),
     data_files=[
         ('share/ament_index/resource_index/packages',
@@ -21,7 +21,7 @@ setup(
     zip_safe=True,
     maintainer='Louis M',
     maintainer_email='maintainer@example.com',
-    description='Distributed autonomy integration package to support ROS 2 simulation environments on macOS.',
+    description='integration package for VIO with autonomy pipeline.',
     license='Apache-2.0',
     extras_require={
         'test': [

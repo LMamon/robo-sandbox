@@ -18,7 +18,7 @@
             <uri>meshes/pickup.dae</uri>
           </mesh>
         </geometry>
-        <plugin filename="ignition-gazebo-label-system" name="ignition::gazebo::systems::Label">
+        <plugin filename="gz-sim-label-system" name="gz::sim::systems::Label">
             <label>7</label>
         </plugin>
       </visual>

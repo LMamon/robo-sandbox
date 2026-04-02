@@ -8,7 +8,7 @@
         <geometry>
           <mesh><uri>model://baylands/media/baylands_01.DAE</uri></mesh>
         </geometry>
-        <plugin filename="ignition-gazebo-label-system" name="ignition::gazebo::systems::Label">
+        <plugin filename="gz-sim-label-system" name="gz:sim::systems::Label">
             <label>1</label>
         </plugin>
         <material>
@@ -31,7 +31,7 @@
         <geometry>
           <mesh><uri>model://baylands/media/baylands_02.DAE</uri></mesh>
         </geometry>
-        <plugin filename="ignition-gazebo-label-system" name="ignition::gazebo::systems::Label">
+        <plugin filename="gz-sim-label-system" name="gz::sim::systems::Label">
             <label>1</label>
         </plugin>
         <material>
@@ -54,7 +54,7 @@
         <geometry>
           <mesh><uri>model://baylands/media/baylands_03.DAE</uri></mesh>
         </geometry>
-        <plugin filename="ignition-gazebo-label-system" name="ignition::gazebo::systems::Label">
+        <plugin filename="gz-sim-label-system" name="gz::sim::systems::Label">
             <label>2</label>
         </plugin>
       </visual>

@@ -27,47 +27,47 @@
       <heading_deg>0</heading_deg>
     </spherical_coordinates>
     <include>
-      <uri>models://baylands</uri>
+      <uri>model://baylands</uri>
       <name>park</name>
       <pose>205 155 -1 0 0 0</pose>
     </include>
     <include>
-      <uri>models://coast_water</uri>
+      <uri>model://coast_water</uri>
       <name>coast_water</name>
       <pose>0 0 -2 0 0 0</pose>
     </include>
     <include>
-      <uri>models://px4vision</uri>
+      <uri>model://px4vision</uri>
       <name>px4vision</name>
-      <pose>0.00182 -0.00015 -0.032 0.0037 0.033 9.6e-05</pose>
+      <pose>0.00182 -0.00015 -0.032 0.0037 0.033 1.57</pose>
     </include>
     <include>
-      <uri>models://hatchback_red</uri>
+      <uri>model://hatchback_red</uri>
       <name>hatchback_red</name>
       <pose>-29.53 -31.99 0 0 0 -1.119</pose>
     </include>
     <include>
-      <uri>models://hatchback</uri>
+      <uri>model://hatchback</uri>
       <name>hatchback</name>
       <pose>-59.85 -35.992 0.039 0 0 -1.0625</pose>
     </include>
     <include>
-      <uri>models://pickup</uri>
+      <uri>model://pickup</uri>
       <name>pickup</name>
       <pose>-18.25 -53.554 0.021 0 0 2.398</pose>
     </include>
     <include>
-      <uri>models://person_walking</uri>
+      <uri>model://person_walking</uri>
       <name>person_walking</name>
       <pose>-10.037 -29.93 0.1 5.4e-05 1.3e-05 0.78</pose>
     </include>
     <include>
-      <uri>models://patientwheelchair</uri>
-      <name>PatientWheelChair</name>
+      <uri>model://patientwheelchair</uri>
+      <name>patientwheelchair</name>
       <pose>-5.39 -9.93 0.029 0 0 2.75</pose>
     </include>
     <include>
-      <uri>models://cessna_c172</uri>
+      <uri>model://cessna_c172</uri>
       <name>cessna_c172</name>
       <pose>-12.77 33.23 0.88 -0.06 -0.08 0.45</pose>
     </include>

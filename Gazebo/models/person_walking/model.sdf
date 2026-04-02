@@ -40,7 +40,7 @@
             <uri>model://person_walking/meshes/walking.dae</uri>
           </mesh>
         </geometry>
-        <plugin filename="ignition-gazebo-label-system" name="ignition::gazebo::systems::Label">
+        <plugin filename="gz-sim-label-system" name="gz::sim::systems::Label">
             <label>6</label>
         </plugin>
       </visual>

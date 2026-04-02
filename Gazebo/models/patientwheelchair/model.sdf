@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <sdf version='1.9'>
-  <model name="PatientWheelChair">
+  <model name="patientwheelchair">
    <static>true</static>
     <link name="body">
       <pose>0 0 0 0 0 0</pose>
@@ -8,19 +8,19 @@
       <visual name="visual">
         <geometry>
           <mesh>
-            <uri>model://PatientWheelChair/meshes/PatientWheelChair.obj</uri>
+            <uri>model://patientwheelchair/meshes/PatientWheelChair.obj</uri>
           </mesh>
         </geometry>
-        <plugin filename="ignition-gazebo-label-system" name="ignition::gazebo::systems::Label">
+        <plugin filename="gz-sim-label-system" name="gz::sim::systems::Label">
             <label>6</label>
         </plugin>
       </visual>
 
       <collision name="collision">
         <geometry>
-          <box>
-            <uri>model://PatientWheelChair/meshes/PatientWheelChair_Col.obj</uri>
-          </box>
+          <mesh>
+            <uri>model://patientwheelchair/meshes/PatientWheelChair_Col.obj</uri>
+          </mesh>
         </geometry>
       </collision>
 

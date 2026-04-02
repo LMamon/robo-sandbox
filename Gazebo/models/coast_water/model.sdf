@@ -9,10 +9,10 @@
                         <uri>meshes/waterlow.dae</uri>
                     </mesh>
                 </geometry>
-                <plugin filename="ignition-gazebo-label-system" name="ignition::gazebo::systems::Label"> <!--might need to change when using ign -->
+                <plugin filename="gz-sim-label-system" name="gz::sim::systems::Label"> <!--might need to change when using ign -->
                     <label>3</label>
                 </plugin>
-                <plugin filename="ignition-gazebo-shader-param-system" name="ignition::gazebo::systems::ShaderParam"> <!-- different versions for gz and ign -->
+                <plugin filename="gz-sim-shader-param-system" name="gz::sim::systems::ShaderParam"> <!-- different versions for gz and ign -->
                     <shader language="glsl">
                         <vertex>materials/programs/GerstnerWaves_vs_330.glsl</vertex>
                         <fragment>materials/programs/GerstnerWaves_fs_330.glsl</fragment>

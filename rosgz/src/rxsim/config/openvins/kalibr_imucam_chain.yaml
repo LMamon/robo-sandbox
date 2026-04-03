@@ -1,0 +1,16 @@
+%YAML:1.0
+
+cam0:
+  T_cam_imu: #rotation from camera to IMU R_CtoI, position of camera in IMU p_CinI
+    - [1.0, 0.0, 0.0, 0.09]
+    - [0.0, 1.0, 0.0, -0.032]
+    - [0.0, 0.0, 1.0, -0.012]
+    - [0.0, 0.0, 0.0, 1.0]
+  cam_overlaps: [0]
+  camera_model: pinhole
+  distortion_model: radtan
+  distortion_coeffs: [0.0, 0.0, 0.0, 0.0]
+  intrinsics: [320, 320, 320, 240] #fu, fv, cu, cv
+  resolution: [640, 480]
+  rostopic: /px4vision/rgb/image
+  timeshift_cam_imu: 0.0

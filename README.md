@@ -2,74 +2,65 @@
 
 **robo-sandbox** is a minimal robotics simulation sandbox that contains:
 - Gazebo worlds and models
-- ROS–Gazebo bridge and launch files
+- ROS 2 - Gazebo bridge and launch system
+- Real time vision inference
+- Mono VIO pipeline integrated with PX4 SITL
 
-The repository is intentionally lightweight and assumes Gazebo, ROS 2, and PX4 (if used) are installed externally. Its purpose is to provide a clean place to iterate on simulation assets and integration logic without duplicating models or maintaining multiple branches.
+The system is designed to support remote sensing and autonomy in GNSS-degraded environments, with a focus on onboard visual perception and edge deployment.
 
----
+The repository is intentionally lightweight and assumes Gazebo (harmonic), ROS 2 (humble), and PX4(v1.16) are installed on host system. The system is designed as a mondular autonomy pipeline not just a simulator, assets have been modified for stable builds on both macOS and ubuntu 22.04.
 
-## The problem addressesed
 
-There is a practical incompatibility in the current Gazebo ecosystem particularly on macOS:
-
-- **PX4 is only compatible with Gazebo Harmonic and newer**
-- **Visualization tooling (ROS bridges, Foxglove, etc.) is unreliable or non-functional on Gazebo Harmonic**, because messages often do not propagate cleanly outside the `gz` transport layer
-- **Older Gazebo versions (Ignition / Fortress)** work well for visualization, but **are incompatible with autopilot software**
-
-This creates a split workflow:
-- One setup that works for **visualization**
-- Another setup that works for **autopilot simulation**
-- The same worlds and models need to run in both
-
-Maintaining separate model files or Git branches for this quickly becomes error-prone and hard to keep in sync.
 
 ---
+## Launch
 
-## The solution used here
+Everything runs through a single launch file
 
-This repository keeps:
-- **one set of worlds**
-- **one set of models**
-- **one ROS–Gazebo bridge configuration**
+```zsh
+cd rosgz
+colcon build --packages-select <packages>
+. install/setup.zsh
+```
 
-The only differences between visualization and autopilot workflows are handled by **version-specific Gazebo system plugins**, selected at runtime.
+### Autopilot mode (full system)
+```zsh 
+ros2 launch rxsim system.launch.py mode:=autopilot
+```
 
-This is done by:
-1. Using environment-variable substitution in SDF plugin declarations
-2. Providing small `.zsh` files that export the correct plugin identifiers for the Gazebo version being used
-3. Sourcing the appropriate file before launching the simulator
-
-No files are duplicated, and no branches are required.
-
+### Visualization mode (no PX4)
+```zsh
+ros2 launch rxsim system.launch.py mode:=viz
+```
 ---
+
+## Platforms
+
+- Jetson Orin Nano SDK is the primary deployment platform + target
+- macOS supported for visualization and development
 
 ## Repository layout
 
 ```text
 gazebo/
   ├─ worlds/
-  └─ models/
+  ├─ models/
+  └─ labels.txt
 
 rosgz/
-  ├─ bridge.yaml
-  ├─ rxsim_launch.py
-  ├─ viz_mode.zsh
-  └─ autopilot_mode.zsh
+  ├─ * open_vins/
+  ├─ perception/
+  ├─ * px4_msgs/
+  ├─ * ros_gz/
+  ├─ rxsim/
+  ├─ vio/
+  └─ * vision_opencv
 ```
+px4_ros_uxrce_dds_ws and PX4-Autopilot not shown
 
-## Usage 
-### Visualization mode (Ignition / Fortress)
-Used when ROS visualization tools are the priority.
-``` zsh
-. rosgz/viz_mode.zsh
-ign gazebo gazebo/worlds/<world>.sdf
-```
+TODO: docker container
 
-### Autopilot
-Used when running PX4 SITL.
-```zsh
-. rosgz/autopilot_mode.zsh
-gz sim gazebo/worlds/<world>.sdf
-```
+TODO: demo recording
 
-the sourced .zsh file ensures the correct Gazebo system plugins are loaded for that version.
+
+\* external packages

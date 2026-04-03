@@ -31,7 +31,7 @@
             <uri>model://cessna_c172/meshes/body.dae</uri>
           </mesh>
         </geometry>
-        <plugin filename="gz-sim-label-system" name="gz::sim::systems::Label">
+        <plugin filename="gz-sim-label-system" name="gz::sim::v8::systems::Label">
             <label>4</label>
         </plugin>
       </visual>

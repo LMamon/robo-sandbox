@@ -1,6 +1,7 @@
 import os
 from launch import LaunchDescription
-from launch.actions import ExecuteProcess, TimerAction 
+from launch.launch_description_sources import PythonLaunchDescriptionSource 
+from launch.actions import ExecuteProcess, TimerAction, IncludeLaunchDescription
 from launch_ros.actions import Node
 from ament_index_python.packages import get_package_share_directory
 from launch.actions import LogInfo
@@ -8,11 +9,11 @@ from launch.actions import LogInfo
 def generate_launch_description():
     this_dir = os.path.dirname(os.path.abspath(__file__))
     bridge_yaml = os.path.join(this_dir, 'bridge.yaml')
-    config_dir = os.path.join(
-                    get_package_share_directory('rxsim'),
-                    'config',
-                    'openvins'
-                )
+    # config_dir = os.path.join(
+    #                 get_package_share_directory('rxsim'),
+    #                 'config',
+    #                 'openvins'
+    #             )
     
     uxrce_agent = ExecuteProcess(
         cmd=['MicroXRCEAgent', 'udp4', '-p', '8888'],
@@ -32,20 +33,33 @@ def generate_launch_description():
                     output='screen'
                 )
     
-    ov_node = Node(
-                    package='ov_msckf',
-                    executable='run_subscribe_msckf',
-                    name='ov_msckf',
-                    output='screen',
-                    parameters=[
-                        {"use_sim_time": True},
-                        {"verbosity": "INFO"},
-                        {"use_stereo": "false"},
-                        {"max_cameras": 1},
-                        {"save_total_state": "false"},
-                        {"config_path": os.path.join(config_dir, 'estimator_config.yaml')},
-                    ],
+    ov_launch = IncludeLaunchDescription(
+                    PythonLaunchDescriptionSource(
+                        os.path.join(
+                            get_package_share_directory('ov_msckf'),
+                            'launch',
+                            'subscribe.launch.py'
+                        )
+                    ),
+                    launch_arguments={
+                        'config': 'gazebo_px4'
+                    }.items()
                 )
+    
+    # ov_node = Node(
+    #                 package='ov_msckf',
+    #                 executable='run_subscribe_msckf',
+    #                 name='ov_msckf',
+    #                 output='screen',
+    #                 parameters=[
+    #                     {"use_sim_time": True},
+    #                     {"verbosity": "INFO"},
+    #                     {"use_stereo": "false"},
+    #                     {"max_cameras": 1},
+    #                     {"save_total_state": "false"},
+    #                     {"config_path": os.path.join(config_dir, 'estimator_config.yaml')},
+    #                 ],
+    #             )
     vio_node = Node(
                     package='vio',
                     executable='vio_node',
@@ -83,7 +97,7 @@ def generate_launch_description():
         ),
         TimerAction(
             period=6.0,
-            actions=[ov_node]
+            actions=[ov_launch]
         ),
         TimerAction(
             period=8.0,

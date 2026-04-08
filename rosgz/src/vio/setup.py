@@ -25,6 +25,8 @@ setup(
     entry_points={
         'console_scripts': [
             'vio_node = vio.vio_node:main',
+            'gt_path_publisher = vio.gt_path_publisher:main',
+            'aligned_path_publisher = vio.aligned_path_publisher:main',
         ],
     },
 )

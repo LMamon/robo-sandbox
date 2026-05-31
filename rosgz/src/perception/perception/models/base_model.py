@@ -11,7 +11,7 @@ class BaseModel:
         results = self.model(img, verbose = False)[0]
         
         if results.boxes is not None:
-            keep = results.boxes.conf > 0.1 # get to 70% confidence threshold
+            keep = results.boxes.conf > 0.15 # get to 70% confidence threshold
             results.boxes = results.boxes[keep]
         
         return results

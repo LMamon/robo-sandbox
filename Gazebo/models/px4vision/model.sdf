@@ -57,7 +57,7 @@
       <sensor name="air_pressure_sensor" type="air_pressure">
         <frame_id>base_link</frame_id>
         <always_on>1</always_on>
-        <update_rate>50</update_rate>
+        <update_rate>30</update_rate>
         <plugin filename="gz-sim-air-pressure-system" name="gz::sim::systems::AirPressure" />
         <air_pressure>
           <topic>baro</topic>
@@ -97,15 +97,12 @@
           </z>
         </magnetometer>
       </sensor>
-      <!--
       <sensor name="navsat_sensor" type="navsat">
          <frame_id>base_link</frame_id> 
-        <always_on>0</always_on>
-        <update_rate>0</update_rate>
-        <plugin filename="gz-sim-navsat-system" name="gz::sim::systems::NavSat"/>  different versions for gz and ign
-         <topic>navsat</topic> 
-      </sensor> 
-      -->
+        <always_on>1</always_on>
+        <update_rate>10</update_rate>
+        <plugin filename="gz-sim-navsat-system" name="gz::sim::systems::NavSat"/>  <!-- different versions for gz and ign -->
+      </sensor>
       <sensor name="imu_sensor" type="imu">
         <frame_id>base_link</frame_id>
         <always_on>1</always_on>
@@ -170,7 +167,7 @@
       <sensor name="gpu_lidar" type="gpu_lidar">
         <frame_id>base_link</frame_id>
         <pose> 0.07 0.032 -0.012 0 -0.4 0</pose>
-        <always_on>0</always_on>
+        <always_on>1</always_on>
         <update_rate>30</update_rate>
         <ray>
           <topic>lidar</topic>
@@ -200,7 +197,7 @@
       </sensor>
       <sensor name="optical_flow" type="camera">
         <pose> 0.7 0.32 -4.0 0 1.5708 0 </pose> 
-        <always_on>0</always_on>
+        <always_on>1</always_on>
         <update_rate>30</update_rate>
         <camera>
           <horizontal_fov>1.3962634</horizontal_fov>
@@ -216,41 +213,6 @@
           </clip>
         </camera>
       </sensor>
-      <!-- <sensor name="gps" type="gps">
-        <pose>0 0 0.05 0 0 0</pose>
-        <always_on>1</always_on>
-        <update_rate>10</update_rate>
-        <gps>
-          <position_sensing>
-            <horizontal>
-              <noise type="gaussian">
-                <mean>0</mean>
-                <stddev>1.0</stddev>
-              </noise>
-            </horizontal>
-            <vertical>
-              <noise type="gaussian">
-                <mean>0</mean>
-                <stddev>1.0</stddev>
-              </noise>
-            </vertical>
-          </position_sensing>
-          <velocity_sensing>
-            <horizontal>
-              <noise type="gaussian">
-                <mean>0</mean>
-                <stddev>0.1</stddev>
-              </noise>
-            </horizontal>
-            <vertical>
-              <noise type="gaussian">
-                <mean>0</mean>
-                <stddev>0.1</stddev>
-              </noise>
-            </vertical>
-          </velocity_sensing>
-        </gps>
-      </sensor> -->
     </link>
     <!-- Ground-truth pose publisher -->
     
@@ -260,26 +222,9 @@
       <update_rate>30</update_rate>
     </plugin>
    
-
-    <!-- Follow actor / camera tracking -->
-    <!--
-    <plugin
-      filename="ignition-gazebo6-follow-actor-system"
-      name="ignition::gazebo::systems::FollowActor">
-      <target>px4vision</target>
-    </plugin>
-    -->
-    <!--
-    <plugin
-      filename="ignition-gazebo6-thermal-system"
-      name="ignition::gazebo::systems::Thermal">
-      <camera>rgb_camera</camera>
-      <topic>/px4vision/rgb/thermal</topic>
-    </plugin>
-    -->
     <!-- RGB Camera Link -->
-    <link name="rgb_camera_link">
-      <pose> 0.09 -0.032 -0.012 0 0 0 </pose>  <!-- adjust as needed -->
+    <link name="left_camera_link">
+      <pose> 0.19 0.05 -0.012 0 0 0 </pose>  <!-- adjust as needed 0.09 -0.032 -0.012 0 0 0 -->
       <!-- Minimal inertial block -->
       <inertial>
         <mass>0.01</mass>
@@ -291,35 +236,21 @@
       </inertial>
 
       <!-- Simple collision so physics doesn't explode -->
-      <collision name="rgb_camera_collision">
+      <collision name="left_camera_collision">
         <geometry>
           <box><size>0.05 0.05 0.05</size></box>
         </geometry>
       </collision>
 
-      <visual name="rgb_camera_visual">
-        <geometry>
-          <box><size>0.01 0.01 0.01</size></box>
-        </geometry>
-        <material>
-          <ambient>0 0 1 1</ambient>
-          <diffuse>0 0 1 1</diffuse>
-        </material>
-      </visual>
-      <sensor name="rgb_camera" type="camera">
-        <frame_id>rgb_camera_link</frame_id>
+      <sensor name="left_camera" type="camera">
+        <frame_id>left_camera_optical</frame_id>
         <always_on>1</always_on>
-        <update_rate>25</update_rate>
-        <!-- <plugin filename="gz-sim-camera-system" name="gz::sim::systems::Camera"/> -->
-        <!-- <ros>
-          <namespace>/px4vision</namespace>
-          <remapping>image_raw:=rgb/image</remapping>
-          <remapping>camera_info:=rgb/camera_info</remapping>
-        </ros> -->
-        <!-- <plugin filename="gz-sim-camera-system" name="gz::sim::systems::Camera"/> -->
+        <update_rate>30</update_rate>
         <plugin filename="libgz-sim-camera-system.so" name="gz::sim::systems::Camera"/>
-        <camera>
-          <topic>image</topic>
+        
+        <!-- left -->
+        <camera name="left">
+          <topic>left/image</topic>
           <horizontal_fov>1.5708</horizontal_fov>
           <image>
             <width>640</width>
@@ -342,7 +273,7 @@
       </sensor>
 
       <!-- <sensor name="boundingbox_camera" type="boundingbox_camera">
-        <always_on>0</always_on>
+        <always_on>1</always_on>
         <update_rate>10</update_rate>
         <topic>gt_bbox</topic>
         <camera>
@@ -372,7 +303,7 @@
       </sensor> -->
 
       <!-- <sensor name="instance_segmentation_camera" type="segmentation_camera">
-        <always_on>0</always_on>
+        <always_on>1</always_on>
         <update_rate>10</update_rate>
         <topic>gt_panoptic</topic>
         <camera>
@@ -395,22 +326,73 @@
             <near>0.02</near>
             <far>100.0</far>
           </clip>
-          <save enabled="true">
+          <save enabled="false">
             <path>segmentation_data/panoptic_camera</path>
           </save>
         </camera>
       </sensor> -->
     </link>
 
-    <joint name="rgb_camera_joint" type="fixed">
+    <joint name="left_camera_joint" type="fixed">
       <parent>base_link</parent>
-      <child>rgb_camera_link</child>
+      <child>left_camera_link</child>
     </joint>
+
+    <link name="right_camera_link">
+      <pose> 0.19 -0.05 -0.012 0 0 0 </pose> <!-- <pose> original: 0.09 0.068 -0.012 0 0 0 good working one: 0.19 -0.032 -0.012 0 0 0 </pose> -->
+      <inertial>
+        <mass>0.01</mass>
+        <inertia>
+          <ixx>1e-6</ixx>
+          <iyy>1e-6</iyy>
+          <izz>1e-6</izz>
+        </inertia>
+      </inertial>
+
+      <collision name="right_camera_collision">
+        <geometry>
+          <box><size>0.05 0.05 0.05</size></box>
+        </geometry>
+      </collision>
+
+      <sensor name="right_camera" type="camera">
+        <frame_id>right_camera_optical</frame_id>
+        <always_on>1</always_on>
+        <update_rate>30</update_rate>
+        <plugin filename="libgz-sim-camera-system.so" name="gz::sim::systems::Camera"/>
+        <camera>
+          <topic>right/image</topic>
+          <horizontal_fov>1.5708</horizontal_fov>
+          <image>
+            <width>640</width>
+            <height>480</height>
+            <format>R8G8B8</format>
+          </image>
+          <lens>
+            <intrinsics>
+              <fx>320</fx>
+              <fy>320</fy>
+              <cx>320</cx>
+              <cy>240</cy>
+            </intrinsics>
+          </lens>
+          <clip>
+            <near>0.02</near>
+            <far>100.0</far>
+          </clip>
+        </camera>
+      </sensor>
+    </link>
+
+    <joint name="right_camera_joint" type="fixed">
+      <parent>base_link</parent>
+      <child>right_camera_link</child>
+    </joint>
+
 
     <!-- Depth Camera Link -->
     <link name="depth_camera_link">
-      <frame_id>depth_camera_link</frame_id>
-      <pose> 0.09 -0.032 -0.012 0 0 0 </pose> <!--<pose> 0.09 -0.012 -0.012 0 0 0 </pose> offset if depth and rgb shouldnt overlap -->
+      <pose> 0.09 -0.032 -0.012 0 0 0 </pose> <!-- <pose> 0.09 -0.012 -0.012 0 0 0 </pose> offset if depth and rgb shouldnt overlap -->
 
       <!-- Minimal inertial block -->
       <inertial>
@@ -438,20 +420,29 @@
           <ambient>0 1 0 1</ambient>
           <diffuse>0 1 0 1</diffuse>
         </material>
-      </visual>
+      </visual> 
 
-      <sensor name="depth_camera" type="depth">
-        <always_on>0</always_on>
-        <update_rate>1</update_rate>
-        <!-- <plugin filename="gz-sim-depth-camera-system" name="gz::sim::systems::DepthCamera"/> -->
-        <depth_camera>
-          <topic>depth_camera</topic>
+      <sensor name="depth_camera" type="depth_camera">
+        <frame_id>depth_camera_optical</frame_id>
+        <always_on>1</always_on>
+        <update_rate>30</update_rate>
+
+        <topic>depth</topic>
+
+        <camera>
           <horizontal_fov>1.5708</horizontal_fov>
+
           <image>
             <width>640</width>
             <height>480</height>
-            <format>R8G8B8</format>
+            <format>R_FLOAT32</format>
           </image>
+
+          <clip>
+            <near>0.02</near>
+            <far>100.0</far>
+          </clip>
+
           <lens>
             <intrinsics>
               <fx>320</fx>
@@ -460,14 +451,13 @@
               <cy>240</cy>
             </intrinsics>
           </lens>
-          <clip>
-            <near>0.02</near>
-            <far>100.0</far>
-          </clip>
-          <save enabled="true">
-            <path>depth_data/depth_camera</path>
-          </save>
+        </camera>
+
+        <depth_camera>
+          <output>depths</output>
         </depth_camera>
+
+        <plugin filename="gz-sim-depth-camera-system" name="gz::sim::systems::DepthCamera"/>
       </sensor>
     </link>
 
@@ -475,7 +465,7 @@
     <joint name="depth_camera_joint" type="fixed">
       <parent>base_link</parent>
       <child>depth_camera_link</child>
-    </joint>
+    </joint> 
 
     <link name='rotor_0'>
       <pose>0.0935 -0.107 0.03 0 0 0</pose>

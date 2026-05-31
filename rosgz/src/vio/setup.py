@@ -27,6 +27,7 @@ setup(
             'vio_node = vio.vio_node:main',
             'gt_path_publisher = vio.gt_path_publisher:main',
             'aligned_path_publisher = vio.aligned_path_publisher:main',
+            'stereo_sync = vio.stereo_sync:main', 
         ],
     },
 )

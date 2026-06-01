@@ -16,7 +16,6 @@ Source/
 *.sln
 
 # Pixi / tooling
-Dockerfile
 pixi.lock
 pixi.toml
 
@@ -43,7 +42,6 @@ segmentation_data/
 px4_ros_uxrce_dds_ws/
 
 rosbag2*
-*.zsh
 rosgz/src/isaac_ros_common/
 rosgz/src/isaac_ros_nitros/
 rosgz/src/isaac_ros_nvblox/

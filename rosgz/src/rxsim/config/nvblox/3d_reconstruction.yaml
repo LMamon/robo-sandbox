@@ -1,0 +1,128 @@
+/**:
+  ros__parameters:
+
+    # CUDA
+    cuda_stream_type: 1
+
+    # Core mapping
+    voxel_size: 0.10
+    num_cameras: 1
+    use_tf_transforms: true
+    mapping_type: "static_tsdf"
+
+    # Frames
+    global_frame: "map"
+    odom_frame: "odom"
+    base_frame: "base_link"
+
+    # Sensors
+    use_depth: true
+    use_color: false
+    use_lidar: false
+
+    # Timing
+    tick_period_ms: 10
+
+    integrate_depth_rate_hz: 10.0
+    integrate_color_rate_hz: 0.0
+
+    update_mesh_rate_hz: 2.0
+    update_esdf_rate_hz: 4.0
+
+    publish_layer_rate_hz: 4.0
+    publish_debug_vis_rate_hz: 0.5
+
+    clear_map_outside_radius_rate_hz: 1.0
+
+    # Debugging
+    print_rates_to_console: true
+    print_timings_to_console: false
+    print_delays_to_console: false
+    print_queue_drops_to_console: true
+
+    print_statistics_on_console_period_ms: 5000
+
+    # ESDF
+    esdf_mode: "3d"
+    publish_esdf_distance_slice: true
+
+    # Input queue
+    maximum_input_queue_length: 20
+
+    # QoS
+    input_qos: "DEFAULT"
+
+    # Visualization
+    layer_visualization_min_tsdf_weight: 0.1
+
+    layer_visualization_exclusion_height_m: 10.0
+    layer_visualization_exclusion_radius_m: 50.0
+
+    layer_visualization_undo_gamma_correction: false
+
+    max_back_projection_distance: 8.0
+    back_projection_subsampling: 1
+
+    # Map clearing
+    map_clearing_radius_m: 8.0
+    map_clearing_frame_id: "base_link"
+
+    # ESDF slice visualization
+    esdf_slice_bounds_visualization_attachment_frame_id: "base_link"
+    esdf_slice_bounds_visualization_side_length: 10.0
+
+    # Workspace bounds visualization
+    workspace_height_bounds_visualization_attachment_frame_id: "base_link"
+    workspace_height_bounds_visualization_side_length: 10.0
+
+    # Disable decay for now
+    decay_tsdf_rate_hz: 0.0
+    decay_dynamic_occupancy_rate_hz: 0.0
+
+    layer_streamer_bandwidth_limit_mbps: 10.0
+
+    static_mapper:
+
+      # Depth preprocessing
+      do_depth_preprocessing: false
+      depth_preprocessing_num_dilations: 0
+
+      # TSDF integration
+      projective_integrator_max_integration_distance_m: 8.0
+
+      projective_integrator_truncation_distance_vox: 4.0
+
+      projective_integrator_weighting_mode: "constant"
+
+      projective_integrator_max_weight: 5.0
+
+      projective_tsdf_integrator_invalid_depth_decay_factor: -1.0
+
+      # Raycasting
+      raycast_subsampling_factor: 2
+
+      # Workspace
+      workspace_bounds_type: "height_bounds"
+
+      workspace_bounds_min_height_m: -1.5
+      workspace_bounds_max_height_m: 1.0
+
+      # ESDF integration
+      esdf_integrator_min_weight: 0.1
+
+      esdf_integrator_max_site_distance_vox: 5.0
+
+      esdf_integrator_max_distance_m: 4.0
+
+      # Mesh
+      mesh_integrator_min_weight: 0.1
+      mesh_integrator_weld_vertices: true
+
+      # Mesh streamer
+      layer_streamer_exclusion_height_m: 2.0
+      layer_streamer_exclusion_radius_m: 15.0
+
+      # ESDF slices
+      esdf_slice_height: 0.09
+      esdf_slice_min_height: -5.0
+      esdf_slice_max_height: 5.0

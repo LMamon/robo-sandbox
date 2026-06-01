@@ -4,21 +4,21 @@ PX4-Autopilot/
 # Unreal Engine
 Binaries/
 Build/
-DerivedDataCache/
-Intermediate/
-Saved/
 Content/
 Config/
+DerivedDataCache/
+Intermediate/
 Plugins/
+Saved/
+sim.uproject
 Source/
 *.xcworkspace/
 *.sln
-sim.uproject
 
 # Pixi / tooling
+Dockerfile
 pixi.lock
 pixi.toml
-Dockerfile
 
 # macOS noise
 .DS_Store
@@ -44,7 +44,17 @@ px4_ros_uxrce_dds_ws/
 
 rosbag2*
 *.zsh
-rosgz/src/open_vins/
+rosgz/src/isaac_ros_common/
+rosgz/src/isaac_ros_nitros/
+rosgz/src/isaac_ros_nvblox/
+rosgz/src/isaac_ros_visual_slam/
+rosgz/src/negotiated/
 rosgz/src/px4_msgs/
 rosgz/src/ros_gz/
 rosgz/src/vision_opencv/
+
+log/
+*.mcap
+*.pth
+*.pt
+*.onnx

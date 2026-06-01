@@ -25,10 +25,11 @@ class GtPathPublisher(Node):
 
     def callback(self, msg):
         self.path.header.stamp = msg.header.stamp
-        self.path.header.frame_id = msg.header.frame_id
-        
+        self.path.header.frame_id = "rxsim1"
+
         pose = PoseStamped()
-        pose.header = msg.header
+        pose.header.stamp = msg.header.stamp
+        pose.header.frame_id = "rxsim1"
         pose.pose = msg.pose
 
         self.path.poses.append(pose)

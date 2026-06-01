@@ -12,7 +12,7 @@ class VIONode(Node):
 
         self.ov_imu_sub = self.create_subscription(
             Odometry,
-            '/ov_msckf/odomimu',
+            '/visual_slam/tracking/odometry',
             self.odom_callback,
             10
         )
@@ -33,19 +33,22 @@ class VIONode(Node):
         vel = msg.twist.twist.linear
         q = msg.pose.pose.orientation
         ang = msg.twist.twist.angular
-        now = msg.header.stamp.sec * 1_000_000 + msg.header.stamp.nanosec // 1000.  #self.get_clock().now().nanoseconds // 1000
+        now = int(msg.header.stamp.sec * 1_000_000 + msg.header.stamp.nanosec // 1000)
 
-        x_ned = pos.y
-        y_ned = pos.x
-        z_ned = -pos.z
+        if not hasattr(self, "origin"):
+            self.origin = pos
 
-        vx = vel.y
-        vy = vel.x
-        vz = -vel.z
+        x_local = pos.x - self.origin.x
+        y_local = pos.y - self.origin.y
+        z_local = pos.z - self.origin.z
+
+        x_ned = y_local
+        y_ned = x_local
+        z_ned = -z_local
 
         q_enu = [q.x, q.y, q.z, q.w]
+        
         #convert quaternion from ENU to NED
-
         r_enu = R.from_quat(q_enu)
         R_enu_to_ned = R.from_matrix([
             [0, 1, 0],
@@ -53,12 +56,9 @@ class VIONode(Node):
             [0, 0, -1]
         ])
         r_ned = R_enu_to_ned * r_enu * R_enu_to_ned.inv()
+        
         q_ned = r_ned.as_quat()
         q_ned = q_ned / np.linalg.norm(q_ned)
-
-        wx = ang.y
-        wy = ang.x
-        wz = -ang.z
 
         vvo.timestamp = now
         vvo.timestamp_sample = now
@@ -67,18 +67,24 @@ class VIONode(Node):
         vvo.velocity_frame = VehicleOdometry.VELOCITY_FRAME_NED
 
         vvo.position = np.array([x_ned, y_ned, z_ned], dtype=np.float32)
-        vvo.velocity = np.array([vx, vy, vz], dtype=np.float32)
-        vvo.q = np.array(q_ned, dtype=np.float32)
-        vvo.angular_velocity = np.array([wx, wy, wz], dtype=np.float32)
-        vvo.velocity_variance = np.array([0.01, 0.01, 0.01], dtype=np.float32)
 
-        vvo.position_variance = np.array([0.01, 0.01, 0.01], dtype=np.float32)
-        vvo.orientation_variance = np.array([0.01, 0.01, 0.01], dtype=np.float32)
+        vvo.velocity = np.array([float('nan'), float('nan'), float('nan')], dtype=np.float32)
+        vvo.q = np.array([
+            q_ned[3],
+            q_ned[0],
+            q_ned[1],
+            q_ned[2]
+        ], dtype=np.float32)
+
+        vvo.angular_velocity = np.array([float('nan'), float('nan'), float('nan')], dtype=np.float32)
+
+        vvo.velocity_variance = np.array([999.0, 999.0, 999.0], dtype=np.float32)
+
+        vvo.position_variance = np.array([0.05, 0.05, 0.1], dtype=np.float32)
+        vvo.orientation_variance = np.array([999.0, 999.0, 999.0], dtype=np.float32)
         vvo.quality = 1
 
-        
         self.vvo_pub.publish(vvo)
-        return
 
 
 def main(args=None):

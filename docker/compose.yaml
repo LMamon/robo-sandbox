@@ -1,0 +1,20 @@
+services:
+  rxsim:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+
+    container_name: rxsim
+
+    network_mode: host
+
+    privileged: true
+
+    stdin_open: true
+    tty: true
+
+    volumes:
+      - ..:/root/rxsim
+      - ~/PX4-Autopilot:/root/PX4-Autopilot
+
+    command: bash
